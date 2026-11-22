@@ -108,6 +108,4 @@ Version 2.x needs Python 3.12 or newer. This project uses Python 3.11 with the 1
 
 Only scrape websites you are allowed to scrape. Check each site's terms of service and `robots.txt` before use.
 
-## Credits
 
-This project started from the web scraping example in [awesome-llm-apps](https://github.com/Shubhamsaboo/awesome-llm-apps) by Shubham Saboo, and uses the open-source [ScrapeGraphAI](https://github.com/ScrapeGraphAI/Scrapegraph-ai) library. Setup instructions, dependency pinning, and troubleshooting notes here were written from my own setup.
