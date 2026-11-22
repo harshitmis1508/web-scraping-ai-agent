@@ -1,96 +1,113 @@
-# 🕷️ Web Scraping AI Agent
+# Local Web Scraping AI Agent
 
-### 🎓 FREE Step-by-Step Tutorial 
-**👉 [Click here to follow our complete step-by-step tutorial](https://www.theunwindai.com/p/build-a-web-scraping-ai-agent-with-llama-3-2-running-locally) and learn how to build this from scratch with detailed code walkthroughs, explanations, and best practices.**
+A small Streamlit app that scrapes a web page and pulls out the data you ask for in plain English. It runs fully on your own machine using **Llama 3.2 via Ollama**, so there are no API costs and nothing leaves your laptop. An OpenAI-powered version is included as an alternative.
 
-AI-powered web scraping using **ScrapeGraphAI** - extract structured data from websites using natural language prompts. This agent runs locally with the open-source `scrapegraphai` library.
-
----
-
-## 📁 What's Inside
-
-**Files**: `ai_scrapper.py`, `local_ai_scrapper.py`
-
-Use the open-source ScrapeGraphAI library that runs on your local machine.
-
-**✅ Pros:**
-- Free to use (no API costs)
-- Full control over execution
-- Privacy-friendly (all data stays local)
-
-**❌ Cons:**
-- Requires local installation and dependencies
-- Limited by your hardware
-- Need to manage updates
+Built and tested on a MacBook Air (Apple M2) with Python 3.11.
 
 ---
 
-## 🚀 Getting Started
+## Features
 
-1. **Clone the repository**
-```bash
-git clone https://github.com/Shubhamsaboo/awesome-llm-apps.git
-cd awesome-llm-apps/starter_ai_agents/web_scraping_ai_agent
+- Describe what you want in natural language, for example "List the titles of the top 10 stories".
+- Runs locally with Llama 3.2 through Ollama, with no API key required.
+- Optional OpenAI mode if you prefer a hosted model.
+- Simple Streamlit interface: enter a URL, enter a prompt, click Scrape.
+
+## Project Structure
+
+```
+web-scraping-ai-agent/
+├── local_ai_scrapper.py   # Local version (Ollama + Llama 3.2)
+├── ai_scrapper.py         # Hosted version (needs an OpenAI API key)
+├── requirements.txt       # Pinned dependencies
+└── README.md
 ```
 
-2. **Install dependencies**
+## Requirements
+
+- macOS (should also work on Linux)
+- Python 3.11
+- [Ollama](https://ollama.com) (for the local version)
+- Git
+
+## Setup
+
+**1. Clone the repo**
+
 ```bash
+git clone https://github.com/harshitmis1508/web-scraping-ai-agent.git
+cd web-scraping-ai-agent
+```
+
+**2. Create a virtual environment and install dependencies**
+
+```bash
+python3.11 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
 pip install -r requirements.txt
+playwright install
 ```
 
-3. **Get your OpenAI API Key**
-- Sign up for an [OpenAI account](https://platform.openai.com/)
-- Obtain your API key
+**3. Install Ollama and download the models**
 
-4. **Run the Streamlit App**
 ```bash
-streamlit run ai_scrapper.py
-# Or for local models:
+brew install ollama
+ollama serve
+```
+
+Leave that terminal running, open a new tab, and run:
+
+```bash
+ollama pull llama3.2
+ollama pull nomic-embed-text
+```
+
+## Run
+
+**Local mode (free, no API key):**
+
+```bash
 streamlit run local_ai_scrapper.py
 ```
 
----
+**OpenAI mode (needs an API key):**
 
-## 💡 Use Cases
-
-### E-commerce Scraping
-```python
-# Extract product information
-prompt = "Extract product names, prices, and availability"
+```bash
+streamlit run ai_scrapper.py
 ```
 
-### Content Aggregation
-```python
-# Convert articles to structured data
-prompt = "Extract article title, author, date, and main content"
-```
+Then open http://localhost:8501, paste a URL, describe what you want, press Enter, and click **Scrape**.
 
-### Competitive Intelligence
-```python
-# Monitor competitor websites
-prompt = "Extract pricing, features, and updates"
-```
+## Example Prompts
 
-### Lead Generation
-```python
-# Extract contact information
-prompt = "Find company names, emails, and phone numbers"
-```
+| Website type | Example prompt |
+|---|---|
+| News / forums | `Extract the title and link of the top 10 stories` |
+| Online stores | `Extract product names, prices, and availability` |
+| Blogs | `Extract the article title, author, and date` |
+| Company pages | `Find company names, emails, and phone numbers` |
 
----
+Tip: start with small, simple pages and ask for a limited number of items. A local model on a laptop can take a few minutes on large pages.
 
-## 🔧 How It Works
+## Troubleshooting
 
-1. You provide your OpenAI API key
-2. Select the model (GPT-4o, GPT-5, or local models)
-3. Enter the URL and extraction prompt
-4. The app uses ScrapeGraphAI to scrape and extract data locally
-5. Results are displayed in the app
+**`ImportError: cannot import name 'ChatOllama' from 'langchain_community.chat_models'`**
+Newer LangChain releases removed this import. This repo pins compatible versions in `requirements.txt` (`scrapegraphai==1.50.0` with `langchain<0.4`), so install from that file instead of upgrading packages.
 
----
+**Browser or Playwright errors**
+Run `playwright install` inside the virtual environment.
 
-## 📖 Documentation
+**Scrape hangs or fails in local mode**
+Make sure `ollama serve` is still running in its own terminal tab, and check with `ollama list` that `llama3.2` and `nomic-embed-text` are downloaded.
 
-- **ScrapeGraphAI Library**: [ScrapeGraphAI GitHub](https://github.com/VinciGit00/Scrapegraph-ai)
+**`scrapegraphai` 2.x will not install**
+Version 2.x needs Python 3.12 or newer. This project uses Python 3.11 with the 1.x series.
 
----
+## Responsible Use
+
+Only scrape websites you are allowed to scrape. Check each site's terms of service and `robots.txt` before use.
+
+## Credits
+
+This project started from the web scraping example in [awesome-llm-apps](https://github.com/Shubhamsaboo/awesome-llm-apps) by Shubham Saboo, and uses the open-source [ScrapeGraphAI](https://github.com/ScrapeGraphAI/Scrapegraph-ai) library. Setup instructions, dependency pinning, and troubleshooting notes here were written from my own setup.
