@@ -1,3 +1,8 @@
-streamlit 
-scrapegraphai
+streamlit
 playwright
+scrapegraphai==1.50.0
+langchain<0.4
+langchain-community<0.4
+langchain-core<0.4
+langchain-openai<0.4
+langchain-ollama<0.4
